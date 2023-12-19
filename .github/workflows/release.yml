@@ -302,6 +302,20 @@ jobs:
           
     steps:
 
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: rustdesk/hbbs
+          token: ${{ secrets.HBBS_READ_TOKEN }}
+
+      - name: Get git tag
+        id: vars
+        run: |
+          T=$(head -n 1 debian/changelog | grep -Po '\d+\.\d+\.\d+[^)\s]*')
+          M=${T%%.*}
+          echo "GIT_TAG=$T" >> $GITHUB_ENV
+          echo "MAJOR_TAG=$M" >> $GITHUB_ENV
+
       - name: Download binaries (${{ matrix.job.os }} - ${{ matrix.job.name }})
         uses: actions/download-artifact@v3
         with:
@@ -331,6 +345,7 @@ jobs:
           files: ${{ matrix.job.name }}/rustdesk-server-${{ matrix.job.os }}-${{ matrix.job.name }}.tar.gz
           token: ${{ secrets.RUSTDESK_SERVER_PRO_UPLOAD_TOKEN }}
           repository: rustdesk/rustdesk-server-pro
+          tag_name: ${{ env.GIT_TAG }}
 
             
   # docker build and push of single-arch images
@@ -627,6 +642,14 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+
+      - name: Get git tag
+        id: vars
+        run: |
+          T=$(head -n 1 debian/changelog | grep -Po '\d+\.\d+\.\d+[^)\s]*')
+          M=${T%%.*}
+          echo "GIT_TAG=$T" >> $GITHUB_ENV
+          echo "MAJOR_TAG=$M" >> $GITHUB_ENV
         
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -668,6 +691,7 @@ jobs:
             debian-build/rustdesk-server-utils_*_${{ matrix.job.debian_platform }}.deb
           token: ${{ secrets.RUSTDESK_SERVER_PRO_UPLOAD_TOKEN }}
           repository: rustdesk/rustdesk-server-pro
+          tag_name: ${{ env.GIT_TAG }}
            
   delete-artifacts:
     runs-on: ubuntu-latest
