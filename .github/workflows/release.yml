@@ -393,7 +393,7 @@ jobs:
       - name: Get git tag
         id: vars
         run: |
-          T=$(head -n 1 debian/changelog | grep -Eo '\d+\.\d+\.\d+[^)\s]*')
+          T=$(head -n 1 debian/changelog | grep -Po '\d+\.\d+\.\d+[^)\s]*')
           M=${T%%.*}
           echo "GIT_TAG=$T" >> $GITHUB_ENV
           echo "MAJOR_TAG=$M" >> $GITHUB_ENV
@@ -431,7 +431,7 @@ jobs:
       - name: Get git tag
         id: vars
         run: |
-          T=${GITHUB_REF#refs/*/}
+          T=$(head -n 1 debian/changelog | grep -Po '\d+\.\d+\.\d+[^)\s]*')
           M=${T%%.*}
           echo "GIT_TAG=$T" >> $GITHUB_ENV
           echo "MAJOR_TAG=$M" >> $GITHUB_ENV
@@ -524,7 +524,7 @@ jobs:
       - name: Get git tag
         id: vars
         run: |
-          T=${GITHUB_REF#refs/*/}
+          T=$(head -n 1 debian/changelog | grep -Po '\d+\.\d+\.\d+[^)\s]*')
           M=${T%%.*}
           echo "GIT_TAG=$T" >> $GITHUB_ENV
           echo "MAJOR_TAG=$M" >> $GITHUB_ENV
@@ -560,7 +560,7 @@ jobs:
       - name: Get git tag
         id: vars
         run: |
-          T=${GITHUB_REF#refs/*/}
+          T=$(head -n 1 debian/changelog | grep -Po '\d+\.\d+\.\d+[^)\s]*')
           M=${T%%.*}
           echo "GIT_TAG=$T" >> $GITHUB_ENV
           echo "MAJOR_TAG=$M" >> $GITHUB_ENV
