@@ -27,22 +27,18 @@ jobs:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        working-directory: ./web_hbbs
-
       - name: Setup Node.js 20.x
         uses: actions/setup-node@v3
         working-directory: ./web_hbbs
         with:
           node-version: 20.x
-          cache: "pnpm"
 
       - name: Build Web
         run: |
           T=$(head -n 1 debian/changelog | grep -Po '\d+\.\d+\.\d+[^)\s]*')
           echo $T # testing tag extraction
           cd web_hbbs
+          npm install -g pnpm
           pnpm install --config.platform=linux --config.architecture=x64
           pnpm build
 
