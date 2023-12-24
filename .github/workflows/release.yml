@@ -26,18 +26,23 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+          
+      - name: Change directory
+        run: cd ./web_hbbs
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
 
       - name: Setup Node.js 20.x
         uses: actions/setup-node@v3
         with:
           node-version: 20.x
+          cache: "pnpm"
 
       - name: Build Web
         run: |
           T=$(head -n 1 debian/changelog | grep -Po '\d+\.\d+\.\d+[^)\s]*')
           echo $T # testing tag extraction
-          cd web_hbbs
-          npm install -g pnpm
           pnpm install --config.platform=linux --config.architecture=x64
           pnpm build
 
@@ -45,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: web
-          path: web_hbbs/dist
+          path: ./dist
           if-no-files-found: error
 
   
