@@ -30,19 +30,16 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-
-      - name: Install yarn
-        run: npm install -g yarn
+          node-version: 18.x
+          cache: "pnpm"
 
       - name: Build Web
         run: |
           T=$(head -n 1 debian/changelog | grep -Po '\d+\.\d+\.\d+[^)\s]*')
           echo $T # testing tag extraction
           cd web_hbbs
-          sed -i 's/pnpm@8.8.0/yarn@1.22.21/g' package.json
-          yarn 
-          yarn build
+          pnpm install --config.platform=linux --config.architecture=x64
+          pnpm build
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v3
