@@ -32,6 +32,7 @@ jobs:
         with:
           run_install: false
           package_json_file: ./web_hbbs/package.json
+          version: 8
 
       - name: Setup Node.js 20.x
         uses: actions/setup-node@v3
