@@ -32,16 +32,16 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install Yarn
-        run: npm install -g yarn
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Build Web
         run: |
           T=$(head -n 1 debian/changelog | grep -Po '\d+\.\d+\.\d+[^)\s]*')
           echo $T # testing tag extraction
           cd web_hbbs
-          yarn
-          yarn build
+          pnpm install
+          pnpm build
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v3
