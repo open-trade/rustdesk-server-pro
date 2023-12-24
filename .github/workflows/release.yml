@@ -40,6 +40,7 @@ jobs:
           T=$(head -n 1 debian/changelog | grep -Po '\d+\.\d+\.\d+[^)\s]*')
           echo $T # testing tag extraction
           cd web_hbbs
+          sed -i 's/pnpm@8.8.0/yarn/g' package.json
           yarn 
           yarn build
 
