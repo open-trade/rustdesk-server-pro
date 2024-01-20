@@ -106,7 +106,7 @@ jobs:
         with:
           command: build
           args: --release --target=${{ matrix.job.target }}
-          use-cross: true  
+          use-cross: matrix.job.target != "x86_64-unknown-linux-gnu"  
 
       - name: Exec chmod
         run: chmod -v a+x target/${{ matrix.job.target }}/release/*
@@ -217,7 +217,6 @@ jobs:
         with:
           command: build
           args: --release --target=x86_64-pc-windows-msvc
-          use-cross: true
 
       - name: Install NSIS
         run: |
