@@ -57,12 +57,12 @@ jobs:
 
     name: Build - ${{ matrix.job.name }}
     needs: build-web
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         job:
-          - { name: "amd64",   target: "x86_64-unknown-linux-musl" }
+          - { name: "amd64",   target: "x86_64-unknown-linux-gnu" }
           - { name: "arm64v8", target: "aarch64-unknown-linux-musl" }
           - { name: "armv7",   target: "armv7-unknown-linux-musleabihf" }
           - { name: "i386",    target: "i686-unknown-linux-musl" }
@@ -92,7 +92,15 @@ jobs:
           touch db.sqlite3
           echo "DATABASE_URL=sqlite://./db.sqlite3" > .env
           sqlx migrate run --source migrations/sqlite
-
+          
+      - name: use native tls for x86_64-unknown-linux-gnu
+        run:
+           if [ ${{ matrix.job.target }} = "x86_64-unknown-linux-gnu" ]; then sudo apt update; fi;
+           if [ ${{ matrix.job.target }} = "x86_64-unknown-linux-gnu" ]; then sudo apt upgrade -y; fi;
+           if [ ${{ matrix.job.target }} = "x86_64-unknown-linux-gnu" ]; then sudo apt install -y librust-openssl-sys-dev libssl-dev pkg-config; fi;
+           if [ ${{ matrix.job.target }} = "x86_64-unknown-linux-gnu" ]; then sed -i 's/rustls/native/g' libs/hbbs_utils/Cargo.toml; fi;
+           if [ ${{ matrix.job.target }} = "x86_64-unknown-linux-gnu" ]; then sed -i 's/rustls/native/g' ./Cargo.toml; fi;
+           
       - name: Build
         uses: actions-rs/cargo@v1
         with:
