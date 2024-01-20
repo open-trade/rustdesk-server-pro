@@ -57,16 +57,16 @@ jobs:
 
     name: Build - ${{ matrix.job.name }}
     needs: build-web
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.job.on }}
     strategy:
       fail-fast: true
       matrix:
         job:
-          - { name: "amd64",   target: "x86_64-unknown-linux-gnu", cross: false }
-          - { name: "arm64v8", target: "aarch64-unknown-linux-musl", cross: true }
-          - { name: "armv7",   target: "armv7-unknown-linux-musleabihf", cross: true }
-          - { name: "i386",    target: "i686-unknown-linux-musl", cross: true }
-          - { name: "amd64fb",    target: "x86_64-unknown-freebsd", cross: true }
+           - { name: "amd64",   target: "x86_64-unknown-linux-gnu", cross: false, on: "ubuntu-20.04" }
+           - { name: "arm64v8", target: "aarch64-unknown-linux-musl", cross: true, on: "self-hosted" }
+           - { name: "armv7",   target: "armv7-unknown-linux-musleabihf", cross: true, on: "ubuntu-20.04" }
+           - { name: "i386",    target: "i686-unknown-linux-musl", cross: true, on: "ubuntu-20.04" }
+           - { name: "amd64fb",    target: "x86_64-unknown-freebsd", cross: true, on: "ubuntu-20.04" }
 
     steps:
       
@@ -95,11 +95,11 @@ jobs:
           
       - name: use native tls for x86_64-unknown-linux-gnu
         run:
-           if [ ${{ matrix.job.target }} = "x86_64-unknown-linux-gnu" ]; then sudo apt update; fi;
-           if [ ${{ matrix.job.target }} = "x86_64-unknown-linux-gnu" ]; then sudo apt upgrade -y; fi;
-           if [ ${{ matrix.job.target }} = "x86_64-unknown-linux-gnu" ]; then sudo apt install -y librust-openssl-sys-dev libssl-dev pkg-config; fi;
-           if [ ${{ matrix.job.target }} = "x86_64-unknown-linux-gnu" ]; then sed -i 's/rustls/native/g' libs/hbbs_utils/Cargo.toml; fi;
-           if [ ${{ matrix.job.target }} = "x86_64-unknown-linux-gnu" ]; then sed -i 's/rustls/native/g' ./Cargo.toml; fi;
+           if ![ ${{ matrix.job.cross }} ]; then sudo apt update; fi;
+           if ![ ${{ matrix.job.cross }} ]; then sudo apt upgrade -y; fi;
+           if ![ ${{ matrix.job.cross }} ]; then sudo apt install -y librust-openssl-sys-dev libssl-dev pkg-config; fi;
+           if ![ ${{ matrix.job.cross }} ]; then sed -i 's/rustls/native/g' libs/hbbs_utils/Cargo.toml; fi;
+           if ![ ${{ matrix.job.cross }} ]; then sed -i 's/rustls/native/g' ./Cargo.toml; fi;
            
       - name: Build
         uses: actions-rs/cargo@v1
