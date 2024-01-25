@@ -63,7 +63,7 @@ jobs:
       matrix:
         job:
            - { name: "amd64-nativetls",   target: "x86_64-unknown-linux-gnu", cross: false, on: "ubuntu-22.04" }
-           - { name: "arm64v8-nativels", target: "aarch64-unknown-linux-gnu", cross: false, on: "self-hosted" }
+           - { name: "arm64v8-nativetls", target: "aarch64-unknown-linux-gnu", cross: false, on: "self-hosted" }
            - { name: "amd64",   target: "x86_64-unknown-linux-musl", cross: true, on: "ubuntu-22.04" }
            - { name: "arm64v8", target: "aarch64-unknown-linux-musl", cross: true, on: "ubuntu-22.04" }
            - { name: "armv7",   target: "armv7-unknown-linux-musleabihf", cross: true, on: "ubuntu-22.04" }
