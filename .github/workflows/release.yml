@@ -62,6 +62,8 @@ jobs:
       fail-fast: true
       matrix:
         job:
+           - { name: "amd64-nativetls",   target: "x86_64-unknown-linux-gnu", cross: false, on: "ubuntu-22.04" }
+           - { name: "arm64v8-nativels", target: "aarch64-unknown-linux-gnu", cross: false, on: "self-hosted" }
            - { name: "amd64",   target: "x86_64-unknown-linux-musl", cross: true, on: "ubuntu-22.04" }
            - { name: "arm64v8", target: "aarch64-unknown-linux-musl", cross: true, on: "ubuntu-22.04" }
            - { name: "armv7",   target: "armv7-unknown-linux-musleabihf", cross: true, on: "ubuntu-22.04" }
@@ -299,6 +301,8 @@ jobs:
       fail-fast: false
       matrix:
         job:
+          - { os: "linux", name: "amd64-nativetls" }
+          - { os: "linux", name: "arm64v8-nativetls" }
           - { os: "linux", name: "amd64" }
           - { os: "linux", name: "arm64v8" }
           - { os: "linux", name: "armv7" }
@@ -366,8 +370,8 @@ jobs:
       fail-fast: false
       matrix:
         job:
-          - { name: "amd64",   docker_platform: "linux/amd64",  s6_platform: "x86_64" }
-          - { name: "arm64v8", docker_platform: "linux/arm64",  s6_platform: "aarch64" }
+          - { name: "amd64-nativetls",   docker_platform: "linux/amd64",  s6_platform: "x86_64" }
+          - { name: "arm64v8-nativetls", docker_platform: "linux/arm64",  s6_platform: "aarch64" }
           - { name: "armv7",   docker_platform: "linux/arm/v7", s6_platform: "armhf" }
           - { name: "i386",    docker_platform: "linux/386",    s6_platform: "i686" }
 
@@ -503,8 +507,8 @@ jobs:
       fail-fast: false
       matrix:
         job:
-          - { name: "amd64",   docker_platform: "linux/amd64" }
-          - { name: "arm64v8", docker_platform: "linux/arm64" }
+          - { name: "amd64-nativetls",   docker_platform: "linux/amd64" }
+          - { name: "arm64v8-nativetls", docker_platform: "linux/arm64" }
           - { name: "armv7",   docker_platform: "linux/arm/v7" }
 
     steps:
@@ -636,6 +640,8 @@ jobs:
       fail-fast: false
       matrix:
         job:
+          - { name: "amd64-nativetls",   debian_platform: "amd64",   crossbuild_package: "" }
+          - { name: "arm64v8-nativetls", debian_platform: "arm64",   crossbuild_package: "crossbuild-essential-arm64" }
           - { name: "amd64",   debian_platform: "amd64",   crossbuild_package: "" }
           - { name: "arm64v8", debian_platform: "arm64",   crossbuild_package: "crossbuild-essential-arm64" }
           - { name: "armv7",   debian_platform: "armhf",   crossbuild_package: "crossbuild-essential-armhf" }
