@@ -637,17 +637,17 @@ jobs:
 
     name: debian package - ${{ matrix.job.name }}
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.job.on }}
     strategy:
       fail-fast: false
       matrix:
         job:
-          - { name: "amd64-nativetls",   debian_platform: "amd64",   crossbuild_package: "" }
-          - { name: "arm64v8-nativetls", debian_platform: "arm64",   crossbuild_package: "crossbuild-essential-arm64" }
-          - { name: "amd64",   debian_platform: "amd64",   crossbuild_package: "" }
-          - { name: "arm64v8", debian_platform: "arm64",   crossbuild_package: "crossbuild-essential-arm64" }
-          - { name: "armv7",   debian_platform: "armhf",   crossbuild_package: "crossbuild-essential-armhf" }
-          - { name: "i386",    debian_platform: "i386",    crossbuild_package: "crossbuild-essential-i386" }
+          - { name: "amd64-nativetls",   debian_platform: "amd64",   crossbuild_package: "", on: "ubuntu-22.04"}
+          - { name: "arm64v8-nativetls", debian_platform: "arm64",   crossbuild_package: "", on: "self-hosted" }
+          - { name: "amd64",   debian_platform: "amd64",   crossbuild_package: "", on: "ubuntu-22.04" }
+          - { name: "arm64v8", debian_platform: "arm64",   crossbuild_package: "crossbuild-essential-arm64", on: "ubuntu-22.04" }
+          - { name: "armv7",   debian_platform: "armhf",   crossbuild_package: "crossbuild-essential-armhf", on: "ubuntu-22.04" }
+          - { name: "i386",    debian_platform: "i386",    crossbuild_package: "crossbuild-essential-i386", on: "ubuntu-22.04" }
 
     steps:
 
