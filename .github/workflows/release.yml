@@ -642,8 +642,8 @@ jobs:
       fail-fast: false
       matrix:
         job:
-          - { name: "amd64-nativetls",   debian_platform: "amd64",   crossbuild_package: "", on: "ubuntu-22.04"}
-          - { name: "arm64v8-nativetls", debian_platform: "arm64",   crossbuild_package: "", on: "self-hosted" }
+          - { name: "amd64-nativetls",   debian_platform: "amd64-nativetls",   crossbuild_package: "", on: "ubuntu-22.04"}
+          - { name: "arm64v8-nativetls", debian_platform: "arm64-nativetls",   crossbuild_package: "", on: "self-hosted" }
           - { name: "amd64",   debian_platform: "amd64",   crossbuild_package: "", on: "ubuntu-22.04" }
           - { name: "arm64v8", debian_platform: "arm64",   crossbuild_package: "crossbuild-essential-arm64", on: "ubuntu-22.04" }
           - { name: "armv7",   debian_platform: "armhf",   crossbuild_package: "crossbuild-essential-armhf", on: "ubuntu-22.04" }
