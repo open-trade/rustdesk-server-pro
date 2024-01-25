@@ -370,10 +370,10 @@ jobs:
       fail-fast: false
       matrix:
         job:
-          - { name: "amd64-nativetls",   docker_platform: "linux/amd64",  s6_platform: "x86_64" }
-          - { name: "arm64v8-nativetls", docker_platform: "linux/arm64",  s6_platform: "aarch64" }
-          - { name: "armv7",   docker_platform: "linux/arm/v7", s6_platform: "armhf" }
-          - { name: "i386",    docker_platform: "linux/386",    s6_platform: "i686" }
+          - { name: "amd64-nativetls",   docker_platform: "linux/amd64",  s6_platform: "x86_64", platform: "amd64" }
+          - { name: "arm64v8-nativetls", docker_platform: "linux/arm64",  s6_platform: "aarch64", platform: "arm64v8" }
+          - { name: "armv7",   docker_platform: "linux/arm/v7", s6_platform: "armhf", platform: "armv7" }
+          - { name: "i386",    docker_platform: "linux/386",    s6_platform: "i686", platform: "i386" }
 
     steps:
 
@@ -436,9 +436,9 @@ jobs:
           build-args: |
             S6_ARCH=${{ matrix.job.s6_platform }}
           tags: |
-            ${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-${{ matrix.job.name }}
-            ${{ secrets.DOCKER_IMAGE }}:${{ env.GIT_TAG }}-${{ matrix.job.name }}
-            ${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}-${{ matrix.job.name }}
+            ${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-${{ matrix.job.platform }}
+            ${{ secrets.DOCKER_IMAGE }}:${{ env.GIT_TAG }}-${{ matrix.job.platform }}
+            ${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}-${{ matrix.job.platform }}
           labels: ${{ steps.meta.outputs.labels }}
 
   # docker build and push of multiarch images
@@ -507,9 +507,9 @@ jobs:
       fail-fast: false
       matrix:
         job:
-          - { name: "amd64-nativetls",   docker_platform: "linux/amd64" }
-          - { name: "arm64v8-nativetls", docker_platform: "linux/arm64" }
-          - { name: "armv7",   docker_platform: "linux/arm/v7" }
+          - { name: "amd64-nativetls",   docker_platform: "linux/amd64", platform: "amd64"}
+          - { name: "arm64v8-nativetls", docker_platform: "linux/arm64", platform: "arm64v8" }
+          - { name: "armv7",   docker_platform: "linux/arm/v7", platform: "armv7" }
 
     steps:
 
@@ -570,9 +570,9 @@ jobs:
           platforms: ${{ matrix.job.docker_platform }}
           push: true
           tags: |
-            ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.LATEST_TAG }}-${{ matrix.job.name }}
-            ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.GIT_TAG }}-${{ matrix.job.name }}
-            ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.MAJOR_TAG }}-${{ matrix.job.name }}
+            ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.LATEST_TAG }}-${{ matrix.job.platform }}
+            ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.GIT_TAG }}-${{ matrix.job.platform }}
+            ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.MAJOR_TAG }}-${{ matrix.job.platform }}
           labels: ${{ steps.meta.outputs.labels }}
 
   # docker build and push of multiarch images
