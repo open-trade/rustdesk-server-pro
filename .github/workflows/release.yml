@@ -375,7 +375,6 @@ jobs:
           - { name: "amd64-nativetls",   docker_platform: "linux/amd64",  s6_platform: "x86_64", platform: "amd64" }
           - { name: "arm64v8-nativetls", docker_platform: "linux/arm64",  s6_platform: "aarch64", platform: "arm64v8" }
           - { name: "armv7",   docker_platform: "linux/arm/v7", s6_platform: "armhf", platform: "armv7" }
-          - { name: "i386",    docker_platform: "linux/386",    s6_platform: "i686", platform: "i386" }
 
     steps:
 
