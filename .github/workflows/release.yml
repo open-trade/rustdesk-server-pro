@@ -26,6 +26,7 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+          ref: hot_fix
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -77,6 +78,7 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+          ref: hot_fix
 
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
@@ -149,6 +151,7 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+          ref: hot_fix
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
@@ -198,6 +201,7 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+          ref: hot_fix
 
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
@@ -321,6 +325,7 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+          ref: hot_fix
 
       - name: Get git tag
         id: vars
@@ -383,6 +388,7 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+          ref: hot_fix
         
       - name: Download binaries
         uses: actions/download-artifact@v3
@@ -456,6 +462,7 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+          ref: hot_fix
 
       - name: Log in to Docker Hub
         if: github.event_name != 'pull_request'
@@ -519,6 +526,7 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+          ref: hot_fix
         
       - name: Download binaries
         uses: actions/download-artifact@v3
@@ -590,6 +598,7 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+          ref: hot_fix
 
       - name: Log in to Docker Hub
         if: github.event_name != 'pull_request'
@@ -655,6 +664,7 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+          ref: hot_fix
 
       - name: Get git tag
         id: vars
@@ -718,6 +728,7 @@ jobs:
         with:
           repository: rustdesk/hbbs
           token: ${{ secrets.HBBS_READ_TOKEN }}
+          ref: hot_fix
 
       - uses: geekyeggo/delete-artifact@v2
         with:
