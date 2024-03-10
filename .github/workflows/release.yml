@@ -244,11 +244,10 @@ jobs:
         run: |
           curl -LJ -o ./job.py https://raw.githubusercontent.com/rustdesk/rustdesk/master/res/job.py
           pip3 install requests argparse
-          mkdir tmp
-          mv ./target/x86_64-pc-windows-msvc/release/*exe ./tmp
-          BASE_URL=${{ secrets.SIGN_BASE_URL }} SECRET_KEY=${{ secrets.SIGN_SECRET_KEY }} python3 ./job.py sign_files ./tmp
-          mv ./tmp/*exe ./target/x86_64-pc-windows-msvc/release/
-          rmdir ./tmp
+          BASE_URL=${{ secrets.SIGN_BASE_URL }} SECRET_KEY=${{ secrets.SIGN_SECRET_KEY }} python3 ./job.py sign_one_file ./target/x86_64-pc-windows-msvc/release/hbbs.exe
+          BASE_URL=${{ secrets.SIGN_BASE_URL }} SECRET_KEY=${{ secrets.SIGN_SECRET_KEY }} python3 ./job.py sign_one_file ./target/x86_64-pc-windows-msvc/release/hbbr.exe
+          BASE_URL=${{ secrets.SIGN_BASE_URL }} SECRET_KEY=${{ secrets.SIGN_SECRET_KEY }} python3 ./job.py sign_one_file ./target/x86_64-pc-windows-msvc/release/rustdesk-utils.exe
+
           
       - name: Build UI browser file
         run: |
@@ -278,7 +277,7 @@ jobs:
       - name: Sign UI setup file 
         shell: bash
         run: |
-          BASE_URL=${{ secrets.SIGN_BASE_URL }} SECRET_KEY=${{ secrets.SIGN_SECRET_KEY }} python3 ./job.py sign_files ./ui/SignOutput
+          BASE_URL=${{ secrets.SIGN_BASE_URL }} SECRET_KEY=${{ secrets.SIGN_SECRET_KEY }} python3 ./job.py sign_one_file ./ui/SignOutput/RustDeskServer.Setup.exe
           
       - name: Publish Artifacts
         uses: actions/upload-artifact@v3
