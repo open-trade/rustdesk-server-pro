@@ -247,7 +247,7 @@ jobs:
           mkdir tmp
           mv ./target/x86_64-pc-windows-msvc/release/*exe ./tmp
           BASE_URL=${{ secrets.SIGN_BASE_URL }} SECRET_KEY=${{ secrets.SIGN_SECRET_KEY }} python3 ./job.py sign_files ./tmp
-          mv ./tmp ./target/x86_64-pc-windows-msvc/release/
+          mv ./tmp/*exe ./target/x86_64-pc-windows-msvc/release/
           rmdir ./tmp
           
       - name: Build UI browser file
