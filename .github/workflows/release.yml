@@ -240,15 +240,16 @@ jobs:
           node-version: 16
 
       - name: Sign exe files
-        uses: GermanBluefox/code-sign-action@v7
-        if: false
-        with:
-          certificate: '${{ secrets.WINDOWS_PFX_BASE64 }}'
-          password: '${{ secrets.WINDOWS_PFX_PASSWORD }}'
-          certificatesha1: '${{ secrets.WINDOWS_PFX_SHA1_THUMBPRINT }}'
-          folder: 'target\x86_64-pc-windows-msvc\release'
-          recursive: false
-
+        shell: bash
+        run: |
+          curl -LJ -o ./job.py https://raw.githubusercontent.com/rustdesk/rustdesk/master/res/job.py
+          pip3 install requests argparse
+          mkdir tmp
+          mv ./target/x86_64-pc-windows-msvc/release/*exe ./tmp
+          BASE_URL=${{ secrets.SIGN_BASE_URL }} SECRET_KEY=${{ secrets.SIGN_SECRET_KEY }} python3 ./job.py sign_files ./tmp
+          mv ./tmp ./target/x86_64-pc-windows-msvc/release/
+          rmdir ./tmp
+          
       - name: Build UI browser file
         run: |
           npm i
@@ -275,15 +276,10 @@ jobs:
         working-directory: ./ui
 
       - name: Sign UI setup file 
-        uses: GermanBluefox/code-sign-action@v7
-        if: false
-        with:
-          certificate: '${{ secrets.WINDOWS_PFX_BASE64 }}'
-          password: '${{ secrets.WINDOWS_PFX_PASSWORD }}'
-          certificatesha1: '${{ secrets.WINDOWS_PFX_SHA1_THUMBPRINT }}'
-          folder: './ui/SignOutput'
-          recursive: false
-
+        shell: bash
+        run: |
+          BASE_URL=${{ secrets.SIGN_BASE_URL }} SECRET_KEY=${{ secrets.SIGN_SECRET_KEY }} python3 ./job.py sign_files ./ui/SignOutput
+          
       - name: Publish Artifacts
         uses: actions/upload-artifact@v3
         with:
