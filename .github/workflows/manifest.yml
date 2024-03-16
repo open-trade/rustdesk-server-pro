@@ -1,4 +1,4 @@
-name: build
+name: manifest
 
 # ------------- NOTE
 # please setup some secrets before running this workflow:
