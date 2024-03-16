@@ -49,7 +49,7 @@ jobs:
         uses: Noelware/docker-manifest-action@master
         with:
           inputs: ${{ secrets.DOCKER_IMAGE }}:${{ env.GIT_TAG }}
-          imagess: ${{ secrets.DOCKER_IMAGE }}:${{ env.GIT_TAG }}-amd64,${{ secrets.DOCKER_IMAGE }}:${{ env.GIT_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE }}:${{ env.GIT_TAG }}-armv7
+          images: ${{ secrets.DOCKER_IMAGE }}:${{ env.GIT_TAG }}-amd64,${{ secrets.DOCKER_IMAGE }}:${{ env.GIT_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE }}:${{ env.GIT_TAG }}-armv7
           push: true
 
       # manifest for :1 tag (major release)
@@ -57,7 +57,7 @@ jobs:
         uses: Noelware/docker-manifest-action@master
         with:
           inputs: ${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}
-          imagess: ${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}-amd64,${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}-armv7
+          images: ${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}-amd64,${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}-armv7
           push: true
 
       # manifest for :latest tag
@@ -65,7 +65,7 @@ jobs:
         uses: Noelware/docker-manifest-action@master
         with:
           inputs: ${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}
-          imagess: ${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-amd64,${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-armv7
+          images: ${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-amd64,${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-armv7
           push: true
 
   # docker build and push of multiarch images
@@ -104,7 +104,7 @@ jobs:
         uses: Noelware/docker-manifest-action@master
         with:
           inputs: ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.GIT_TAG }}
-          imagess: ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.GIT_TAG }}-amd64,${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.GIT_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.GIT_TAG }}-armv7
+          images: ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.GIT_TAG }}-amd64,${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.GIT_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.GIT_TAG }}-armv7
           push: true
 
       # manifest for :1 tag (major release)
@@ -112,7 +112,7 @@ jobs:
         uses: Noelware/docker-manifest-action@master
         with:
           inputs: ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.MAJOR_TAG }}
-          imagess: ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.MAJOR_TAG }}-amd64,${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.MAJOR_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.MAJOR_TAG }}-armv7
+          images: ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.MAJOR_TAG }}-amd64,${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.MAJOR_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.MAJOR_TAG }}-armv7
           push: true
 
       # manifest for :latest tag
@@ -120,5 +120,5 @@ jobs:
         uses: Noelware/docker-manifest-action@master
         with:
           inputs: ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.LATEST_TAG }}
-          imagess: ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.LATEST_TAG }}-amd64,${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.LATEST_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.LATEST_TAG }}-armv7
+          images: ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.LATEST_TAG }}-amd64,${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.LATEST_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.LATEST_TAG }}-armv7
           push: true
