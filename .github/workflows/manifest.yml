@@ -43,6 +43,14 @@ jobs:
           echo "GIT_TAG=$T" >> $GITHUB_ENV
           echo "MAJOR_TAG=$M" >> $GITHUB_ENV
 
+      # manifest for :latest tag
+      - name: Create and push manifest (:latest)
+        uses: Noelware/docker-manifest-action@master
+        with:
+          inputs: ${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}
+          images: ${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-amd64,${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-armv7
+          push: true
+
       # manifest for :1.2.3 tag
       #  this has to run only if invoked by a new tag
       - name: Create and push manifest (:ve.rs.ion)
@@ -58,14 +66,6 @@ jobs:
         with:
           inputs: ${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}
           images: ${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}-amd64,${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE }}:${{ env.MAJOR_TAG }}-armv7
-          push: true
-
-      # manifest for :latest tag
-      - name: Create and push manifest (:latest)
-        uses: Noelware/docker-manifest-action@master
-        with:
-          inputs: ${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}
-          images: ${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-amd64,${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-arm64v8,${{ secrets.DOCKER_IMAGE }}:${{ env.LATEST_TAG }}-armv7
           push: true
 
   # docker build and push of multiarch images
