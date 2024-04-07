@@ -435,6 +435,7 @@ jobs:
           context: "./docker"
           platforms: ${{ matrix.job.docker_platform }}
           push: true
+          provenance: false
           build-args: |
             S6_ARCH=${{ matrix.job.s6_platform }}
           tags: |
@@ -573,6 +574,7 @@ jobs:
           context: "./docker-classic"
           platforms: ${{ matrix.job.docker_platform }}
           push: true
+          provenance: false
           tags: |
             ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.LATEST_TAG }}-${{ matrix.job.platform }}
             ${{ secrets.DOCKER_IMAGE_CLASSIC }}:${{ env.GIT_TAG }}-${{ matrix.job.platform }}
