@@ -352,11 +352,17 @@ jobs:
           sudo apt update
           tar czf ${{ matrix.job.name }}/rustdesk-server-${{ matrix.job.os }}-${{ matrix.job.name }}.tar.gz ${{ matrix.job.name }}/*
 
+      - name: Zip files (${{ matrix.job.os }} - ${{ matrix.job.name }})
+        if: ${{ matrix.job.os == 'windows' }}
+        run: |
+          DEBIAN_FRONTEND=noninteractive sudo apt install -y zip
+          zip ${{ matrix.job.name }}/rustdesk-server-${{ matrix.job.os }}-${{ matrix.job.name }}.zip ${{ matrix.job.name }}/*
+
       - name: Create Release (${{ matrix.job.os }} - (${{ matrix.job.name }}) for pro
         uses: softprops/action-gh-release@v1
         with:
           draft: true
-          files: ${{ matrix.job.name }}/rustdesk-server-${{ matrix.job.os }}-${{ matrix.job.name }}.tar.gz
+          files: ${{ matrix.job.name }}/rustdesk-server-${{ matrix.job.os }}-${{ matrix.job.name }}.*
           token: ${{ secrets.RUSTDESK_SERVER_PRO_UPLOAD_TOKEN }}
           repository: rustdesk/rustdesk-server-pro
           tag_name: ${{ env.GIT_TAG }}
