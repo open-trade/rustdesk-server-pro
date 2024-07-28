@@ -12,6 +12,7 @@ on: [workflow_dispatch]
 env:
   CARGO_TERM_COLOR: always
   LATEST_TAG: latest
+  RUST_VERSION: "1.77"
   
 jobs:
 
@@ -83,7 +84,7 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: "stable"
+          toolchain: ${{ env.RUST_VERSION }}
           override: true
           default: true
           components: rustfmt
@@ -156,7 +157,7 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: ${{ env.RUST_VERSION }}
           target: ${{ matrix.job.target }}
           override: true
           profile: minimal # minimal component installation (ie, no documentation)
@@ -206,7 +207,7 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: "stable"
+          toolchain: ${{ env.RUST_VERSION }}
           override: true
           default: true
           components: rustfmt
@@ -263,7 +264,6 @@ jobs:
 
       - name: Build UI setup file
         run: |
-          rustup default stable 
           cargo build --release
           xcopy /y ..\target\x86_64-pc-windows-msvc\release\*.exe setup\bin\
           xcopy /y target\release\*.exe setup\
