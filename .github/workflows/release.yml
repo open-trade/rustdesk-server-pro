@@ -102,7 +102,7 @@ jobs:
         run:
            #if ! ${{ matrix.job.cross }}; then sudo apt update; fi;
            #if ! ${{ matrix.job.cross }}; then sudo apt upgrade -y; fi;
-           if ! ${{ matrix.job.cross }}; then sudo apt install -y librust-openssl-sys-dev libssl-dev pkg-config; fi;
+           #if ! ${{ matrix.job.cross }}; then sudo apt install -y librust-openssl-sys-dev libssl-dev pkg-config; fi;
            if ! ${{ matrix.job.cross }}; then sed -i 's/rustls/native/g' libs/hbbs_utils/Cargo.toml; fi;
            if ! ${{ matrix.job.cross }}; then sed -i 's/, "rustls-tls-native-roots"//g' ./Cargo.toml; fi;       
            if ! ${{ matrix.job.cross }}; then sed -i 's/rustls/native/g' ./Cargo.toml; fi;
