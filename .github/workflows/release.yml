@@ -349,7 +349,7 @@ jobs:
 
       - name: Pack files (${{ matrix.job.os }} - ${{ matrix.job.name }})
         run: |
-          sudo apt update
+          # sudo apt update
           tar czf ./rustdesk-server-${{ matrix.job.os }}-${{ matrix.job.name }}.tar.gz ${{ matrix.job.name }}/*
 
       - name: Zip files (${{ matrix.job.os }} - ${{ matrix.job.name }})
@@ -682,7 +682,7 @@ jobs:
 
       - name: Create packaging env
         run: |
-          sudo apt update
+          # sudo apt update
           DEBIAN_FRONTEND=noninteractive sudo apt install -y devscripts build-essential debhelper pkg-config ${{ matrix.job.crossbuild_package }}
           mkdir -p debian-build/${{ matrix.job.name }}/bin
           mkdir debian-build/${{ matrix.job.name }}/static
