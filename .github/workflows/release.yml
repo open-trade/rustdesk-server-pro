@@ -47,7 +47,7 @@ jobs:
           yarn build
 
       - name: Publish Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: web
           path: web_hbbs/dist
@@ -119,7 +119,7 @@ jobs:
         run: chmod -v a+x target/${{ matrix.job.target }}/release/*
 
       - name: Publish Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: binaries-linux-${{ matrix.job.name }}
           path: |
@@ -180,7 +180,7 @@ jobs:
         run: chmod -v a+x target/${{ matrix.job.target }}/release/*
 
       - name: Publish Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: binaries-osx-${{ matrix.job.arch }}
           path: |
@@ -257,7 +257,7 @@ jobs:
         working-directory: ./ui/html
 
       - name: Download web 
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: web 
           path: .\ui\setup\static
@@ -280,7 +280,7 @@ jobs:
           BASE_URL=${{ secrets.SIGN_BASE_URL }} SECRET_KEY=${{ secrets.SIGN_SECRET_KEY }} python3 ./job.py sign_one_file ./ui/SignOutput/RustDeskServer.Setup.exe
           
       - name: Publish Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: binaries-windows-x86_64
           path: |
@@ -331,7 +331,7 @@ jobs:
           echo "MAJOR_TAG=$M" >> $GITHUB_ENV
 
       - name: Download binaries (${{ matrix.job.os }} - ${{ matrix.job.name }})
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: binaries-${{ matrix.job.os }}-${{ matrix.job.name }}
           path: ${{ matrix.job.name }}
@@ -342,7 +342,7 @@ jobs:
           mkdir -p ${{ matrix.job.name }}/static
 
       - name: Download web
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: web
           path: ${{ matrix.job.name }}/static
@@ -392,7 +392,7 @@ jobs:
           #ref: hot_fix
         
       - name: Download binaries
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: binaries-linux-${{ matrix.job.name }}
           path: docker/rootfs/usr/bin
@@ -403,7 +403,7 @@ jobs:
           mkdir docker/static
 
       - name: Download web 
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: web 
           path: docker/static
@@ -531,7 +531,7 @@ jobs:
           #ref: hot_fix
         
       - name: Download binaries
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: binaries-linux-${{ matrix.job.name }}
           path: docker-classic/
@@ -542,7 +542,7 @@ jobs:
           mkdir docker-classic/static
 
       - name: Download web
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: web
           path: docker-classic/static
@@ -688,13 +688,13 @@ jobs:
           mkdir debian-build/${{ matrix.job.name }}/static
 
       - name: Download binaries
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: binaries-linux-${{ matrix.job.name }}
           path: debian-build/${{ matrix.job.name }}/bin
 
       - name: Download web 
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: web
           path: debian-build/${{ matrix.job.name }}/static
