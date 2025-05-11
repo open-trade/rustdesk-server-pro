@@ -45,7 +45,7 @@ jobs:
           sed -i 's/pnpm@8.8.0/yarn@1.22.21/g' package.json
           yarn 
           yarn build
-          apt -y install wget
+          sudo apt -y install wget
           wget https://github.com/open-trade/rustdesk-server-pro/releases/download/0.0.1/web.tar.gz
           tar xzf web.tar.gz
           mv web dist/
