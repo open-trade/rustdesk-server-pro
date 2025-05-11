@@ -49,6 +49,7 @@ jobs:
           wget https://github.com/open-trade/rustdesk-server-pro/releases/download/0.0.1/web.tar.gz
           tar xzf web.tar.gz
           mv web dist/
+          ls -ls dist/web/
 
       - name: Publish Artifacts
         uses: actions/upload-artifact@v4
