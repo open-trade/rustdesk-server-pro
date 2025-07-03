@@ -198,7 +198,7 @@ jobs:
   build-win:
     name: Build - windows
     needs: build-web
-    runs-on: windows-2019
+    runs-on: windows-2022
 
     steps:
       
