@@ -35,7 +35,15 @@ jobs:
           node-version: 18
 
       - name: Install yarn
-        run: npm install -g yarn
+        run: npm install -g yarn      
+        
+      - name: Install protoc
+         run: |
+           PROTOC_VERSION=33.4
+           curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip
+           unzip -o protoc-${PROTOC_VERSION}-linux-x86_64.zip -d $HOME/.local
+           echo "$HOME/.local/bin" >> $GITHUB_PATH
+           protoc --version
 
       - name: Build Web
         run: |
@@ -43,7 +51,9 @@ jobs:
           echo $T # testing tag extraction
           cd web_hbbs
           sed -i 's/pnpm@8.8.0/yarn@1.22.21/g' package.json
-          yarn 
+          yarn --ignore-scripts
+          yarn proto
+          yarn
           yarn build
           sudo apt -y install wget
           wget https://github.com/open-trade/rustdesk-server-pro/releases/download/0.0.1/web.tar.gz
