@@ -666,8 +666,8 @@ jobs:
       fail-fast: false
       matrix:
         job:
-          - { name: "amd64-nativetls",   debian_platform: "amd64",   crossbuild_package: "", on: "ubuntu-22.04"}
-          - { name: "arm64v8-nativetls", debian_platform: "arm64",   crossbuild_package: "", on: "ubuntu-22.04-arm" }
+          - { name: "amd64-nativetls",   debian_platform: "amd64",   deb_suffix: "-nativetls", crossbuild_package: "", on: "ubuntu-22.04"}
+          - { name: "arm64v8-nativetls", debian_platform: "arm64",   deb_suffix: "-nativetls", crossbuild_package: "", on: "ubuntu-22.04-arm" }
           - { name: "amd64",   debian_platform: "amd64",   crossbuild_package: "", on: "ubuntu-22.04" }
           - { name: "arm64v8", debian_platform: "arm64",   crossbuild_package: "crossbuild-essential-arm64", on: "ubuntu-22.04" }
           - { name: "armv7",   debian_platform: "armhf",   crossbuild_package: "crossbuild-essential-armhf", on: "ubuntu-22.04" }
@@ -719,15 +719,21 @@ jobs:
           cat debian/control.tpl | sed 's/{{ ARCH }}/${{ matrix.job.debian_platform }}/' > debian-build/${{ matrix.job.name }}/debian/control
           cd debian-build/${{ matrix.job.name }}/
           debuild -i -us -uc -b -a${{ matrix.job.debian_platform }}
+          cd ..
+          if [ -n "${{ matrix.job.deb_suffix }}" ]; then
+            for f in rustdesk-server-*_${{ matrix.job.debian_platform }}.deb; do
+              mv -v "$f" "${f%.deb}${{ matrix.job.deb_suffix }}.deb"
+            done
+          fi
  
       - name: Create Release for pro
         uses: softprops/action-gh-release@v1
         with:
           draft: true
           files: |
-            debian-build/rustdesk-server-hbbr_*_${{ matrix.job.debian_platform }}.deb
-            debian-build/rustdesk-server-hbbs_*_${{ matrix.job.debian_platform }}.deb
-            debian-build/rustdesk-server-utils_*_${{ matrix.job.debian_platform }}.deb
+            debian-build/rustdesk-server-hbbr_*_${{ matrix.job.debian_platform }}${{ matrix.job.deb_suffix }}.deb
+            debian-build/rustdesk-server-hbbs_*_${{ matrix.job.debian_platform }}${{ matrix.job.deb_suffix }}.deb
+            debian-build/rustdesk-server-utils_*_${{ matrix.job.debian_platform }}${{ matrix.job.deb_suffix }}.deb
           token: ${{ secrets.RUSTDESK_SERVER_PRO_UPLOAD_TOKEN }}
           repository: rustdesk/rustdesk-server-pro
           tag_name: ${{ env.GIT_TAG }}
